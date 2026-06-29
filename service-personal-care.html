@@ -1,39 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-<title>Nutritional Counseling – Serene Hospice LLC</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Lato',sans-serif;color:#3D1565;background:#fff;overflow-x:hidden;}
-    a{text-decoration:none;}
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#C9A8E8">
+  <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="500" fill="#C9A8E8"/>
+    <ellipse cx="400" cy="200" rx="260" ry="200" fill="#EDE0F8" opacity="0.5"/>
+    <circle cx="370" cy="130" r="28" fill="#7B4FA8"/>
+    <circle cx="420" cy="148" r="22" fill="#A07ED4"/>
+    <path d="M340,190 Q370,155 410,170 Q440,155 460,190 Q430,230 400,245 Q370,230 340,190Z" fill="#7B4FA8" opacity="0.9"/>
+    <rect x="270" y="275" width="260" height="14" rx="7" fill="#7B4FA8" opacity="0.8"/>
+    <rect x="310" y="300" width="180" height="10" rx="5" fill="#9B70C8" opacity="0.6"/>
+    <path d="M0,430 C200,410 400,450 600,430 C700,420 760,440 800,430 L800,500 L0,500Z" fill="#7B4FA8" opacity="0.4"/>
+  </svg>
+</template>
+<style id="sh-responsive">
+/* MOBILE NAV */
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px;margin-left:auto;flex-shrink:0;}
+.mobile-menu-btn span{display:block;width:24px;height:2px;background:#8565BE;border-radius:2px;}
+.mobile-nav{display:none;position:fixed;top:74px;left:0;right:0;background:rgba(255,255,255,.99);padding:20px 24px;flex-direction:column;z-index:9999;box-shadow:0 8px 24px rgba(149,117,205,.18);}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{color:#8565BE!important;font-size:15px;font-weight:700;padding:14px 0;border-bottom:1px solid #EDE0F8!important;display:block;}
+.mobile-nav a:last-child{background:linear-gradient(135deg,#9575CD,#B8A0E0)!important;color:white!important;padding:14px 20px;border-radius:50px;text-align:center;margin-top:12px;border-bottom:none!important;}
+/* OVERFLOW */
+html,body{overflow-x:hidden!important;}
+*{box-sizing:border-box;}
+img{max-width:100%!important;}
+/* TABLET 900px */
+@media(max-width:900px){
+  .mobile-menu-btn{display:flex!important;}
+  header nav,.header-cta{display:none!important;}
+  section,footer{padding-left:20px!important;padding-right:20px!important;}
+  .sh-grid-3,.sh-grid-4{grid-template-columns:1fr 1fr!important;gap:16px!important;}
+  .sh-footer-grid{grid-template-columns:1fr 1fr!important;gap:24px!important;}
+  .sh-flex-row,.flex-col-mobile,.hero-flex{flex-direction:column!important;gap:24px!important;}
+  .sh-fixed-col,.hero-card,.full-width-mobile{flex:none!important;width:100%!important;max-width:100%!important;}
+  div[style*="flex:0 0"]{flex:none!important;width:100%!important;max-width:100%!important;}
+}
+/* MOBILE 600px */
+@media(max-width:600px){
+  .sh-grid-2,.sh-grid-3,.sh-grid-4,.sh-footer-grid{grid-template-columns:1fr!important;gap:14px!important;}
+  .sh-flex-row,.flex-col-mobile,.hero-flex{flex-direction:column!important;gap:16px!important;}
+  .sh-fixed-col,.hero-card,.full-width-mobile{flex:none!important;width:100%!important;}
+  div[style*="flex:0 0"]{flex:none!important;width:100%!important;max-width:100%!important;}
+  h1{font-size:28px!important;line-height:1.2!important;}
+  h2{font-size:22px!important;}
+  h3{font-size:17px!important;}
+  section{padding-top:40px!important;padding-bottom:40px!important;}
+  footer{padding-top:36px!important;padding-bottom:20px!important;}
+  div[style*="width:1px;background"]{display:none!important;}
+}
+</style>
+<script id="sh-hamburger">
+(function(){
+  function bindNav(){
+    var btn=document.querySelector('.mobile-menu-btn');
+    var nav=document.getElementById('mobileNav');
+    if(!btn||!nav) return false;
+    btn.removeEventListener('click',btn._sh_click||function(){});
+    btn._sh_click=function(e){e.stopPropagation();nav.classList.toggle('open');};
+    btn.addEventListener('click',btn._sh_click);
+    nav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){nav.classList.remove('open');});
+    });
+    document.addEventListener('click',function(e){
+      if(!nav.contains(e.target)&&!btn.contains(e.target)) nav.classList.remove('open');
+    });
+    return true;
+  }
+  // Try immediately
+  if(!bindNav()){
+    // Watch for React to mount the elements
+    var obs=new MutationObserver(function(){
+      if(bindNav()) obs.disconnect();
+    });
+    obs.observe(document.body||document.documentElement,{childList:true,subtree:true});
+    // Safety fallback after 5s
+    setTimeout(function(){obs.disconnect();bindNav();},5000);
+  }
+})();
+</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Our Services – Serene Hospice LLC</title>
+  <script src="animations.js"></script>
+  <link rel="stylesheet" href="responsive.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+  <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Lato',sans-serif;color:#3D1565;background:#fff;overflow-x:hidden;}a{text-decoration:none;}
+    /* ── MOBILE NAV ── */
     .mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px;margin-left:auto;flex-shrink:0;}
     .mobile-menu-btn span{display:block;width:24px;height:2px;background:#8565BE;border-radius:2px;}
-    .mobile-nav{display:none;position:fixed;top:74px;left:0;right:0;background:rgba(255,255,255,.99);backdrop-filter:blur(8px);padding:20px 24px;flex-direction:column;gap:0;z-index:9999;box-shadow:0 8px 24px rgba(149,117,205,.18);}
+    .mobile-nav{display:none;position:fixed;top:74px;left:0;right:0;background:rgba(255,255,255,.99);backdrop-filter:blur(8px);padding:20px 24px;flex-direction:column;gap:0;z-index:999;box-shadow:0 8px 24px rgba(149,117,205,.18);}
     .mobile-nav.open{display:flex;}
-    .mobile-nav a{color:#8565BE!important;font-size:15px;font-weight:700;padding:14px 0;border-bottom:1px solid #EDE0F8!important;display:block;}
+    .mobile-nav a{color:#8565BE!important;font-size:15px;font-weight:700;padding:14px 0;border-bottom:1px solid #EDE0F8!important;display:block;text-decoration:none;}
     .mobile-nav a:last-child{background:linear-gradient(135deg,#9575CD,#B8A0E0)!important;color:white!important;padding:14px 20px;border-radius:50px;text-align:center;margin-top:12px;border-bottom:none!important;}
+    /* ── OVERFLOW PREVENTION ── */
     html,body{overflow-x:hidden!important;}
+    *{box-sizing:border-box;}
+    img{max-width:100%;}
+    /* ── TABLET ── */
     @media(max-width:900px){
       .mobile-menu-btn{display:flex!important;}
       header nav,.header-cta{display:none!important;}
       section,footer{padding-left:20px!important;padding-right:20px!important;}
-      .detail-grid{grid-template-columns:1fr 1fr!important;}
+      .sh-grid-3,.sh-grid-4{grid-template-columns:1fr 1fr!important;gap:16px!important;}
+      .sh-footer-grid{grid-template-columns:1fr 1fr!important;gap:24px!important;}
+      .sh-flex-row,.flex-col-mobile{flex-direction:column!important;gap:24px!important;}
+      .sh-fixed-col,.full-width-mobile{flex:none!important;width:100%!important;max-width:100%!important;}
+      .hero-flex{flex-direction:column!important;gap:28px!important;}
+      .hero-card{flex:none!important;width:100%!important;}
+      h1{font-size:32px!important;line-height:1.2!important;}
+      h2{font-size:24px!important;}
     }
+    /* ── MOBILE ── */
     @media(max-width:600px){
+      .sh-grid-2,.sh-grid-3,.sh-grid-4,.sh-footer-grid{grid-template-columns:1fr!important;gap:14px!important;}
+      .sh-flex-row,.flex-col-mobile{flex-direction:column!important;gap:16px!important;}
+      .sh-fixed-col,.full-width-mobile{flex:none!important;width:100%!important;}
+      div[style*="width:1px;background"]{display:none!important;}
       section{padding-top:40px!important;padding-bottom:40px!important;}
       footer{padding-top:36px!important;padding-bottom:20px!important;}
       h1{font-size:28px!important;}
-      .detail-grid{grid-template-columns:1fr!important;}
+      h2{font-size:20px!important;}
+      h3{font-size:16px!important;}
     }
-    .sh-footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;}
-    @media(max-width:900px){.sh-footer-grid{grid-template-columns:1fr 1fr!important;gap:24px!important;}}
-    @media(max-width:600px){.sh-footer-grid{grid-template-columns:1fr!important;}}
-  </style>
+    .mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px;}
+    .mobile-menu-btn span{display:block;width:24px;height:2px;background:#8565BE;border-radius:2px;transition:all .3s;}
+    .mobile-nav{display:none;position:fixed;top:74px;left:0;right:0;background:rgba(255,255,255,0.98);backdrop-filter:blur(8px);padding:20px 24px;flex-direction:column;gap:0;z-index:999;box-shadow:0 8px 24px rgba(149,117,205,0.15);}
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{color:#8565BE;font-size:15px;font-weight:700;letter-spacing:.5px;padding:14px 0;border-bottom:1px solid #EDE0F8;display:block;}
+    @media(max-width:900px){
+      .mobile-menu-btn{display:flex!important;}
+      header nav,.header-cta{display:none!important;}
+    }@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}</style>
 <style>
 .svc-dd{position:fixed;top:74px;left:50%;transform:translateX(-50%) translateY(-6px);background:white;border:1px solid #E8D8F5;border-radius:18px;box-shadow:0 16px 48px rgba(149,117,205,0.2);padding:28px 28px 18px;z-index:9999;width:700px;pointer-events:none;opacity:0;transition:opacity .2s ease,transform .2s ease;}
 .nav-svc-wrap:hover .svc-dd{pointer-events:auto;opacity:1;transform:translateX(-50%) translateY(0);}
@@ -42,14 +147,13 @@
 .nav-svc-wrap::before{content:'';display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,0.92);z-index:9997;}
 .nav-svc-wrap:hover::before{display:block;}
 </style>
-</head>
-<body>
-<!-- NAV -->
-<header style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(149,117,205,0.09);height:74px;display:flex;align-items:center;padding:0 24px;gap:16px;">
-  <a href="index.html" style="flex-shrink:0;"><img src="uploads/logo.png" alt="Serene Hospice LLC" style="height:52px;width:auto;"></a>
-  <nav style="flex:1;display:flex;justify-content:center;align-items:center;gap:18px;">
+</helmet>
 
-    <a href="about.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;">About</a>
+<!-- NAV -->
+<header style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(149,117,205,0.09);height:74px;display:flex;align-items:center;padding:0 40px;gap:24px;">
+  <a href="index.html" style="flex-shrink:0;"><img src="uploads/logo.png" alt="Serene Hospice LLC" style="height:52px;width:auto;"></a>
+  <nav style="flex:1;display:flex;justify-content:center;align-items:center;gap:24px;">
+    <a href="about.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;" style-hover="border-bottom-color:#A98BD0;">About</a>
     <div style="position:relative;display:inline-flex;align-items:center;" class="nav-svc-wrap">
   <a href="services.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid #A98BD0;display:inline-flex;align-items:center;gap:5px;">Services <svg class="svc-arrow" width="13" height="8" viewBox="0 0 9 5" fill="none" style="margin-top:2px;transition:transform .2s ease;flex-shrink:0;"><path d="M1 1l3.5 3L8 1" stroke="#8565BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   <div class="svc-dd">
@@ -92,22 +196,22 @@
     <a href="services.html" style="display:block;text-align:center;margin-top:14px;padding-top:12px;border-top:1px solid #EDE0F8;font-size:12px;font-weight:700;color:#8565BE;letter-spacing:.5px;">View All Services →</a>
   </div>
 </div>
-    <a href="eligibility.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;">Eligibility</a>
-    <a href="insurance.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;">Insurance</a>
-    <a href="our-team.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;">Our Team</a>
-    <a href="locations.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;">Locations</a>
-    <a href="faq.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;">FAQ</a>
-    <a href="contact.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;">Contact</a>
+    <a href="eligibility.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;" style-hover="border-bottom-color:#A98BD0;">Eligibility</a>
+    <a href="insurance.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;" style-hover="border-bottom-color:#A98BD0;">Insurance</a>
+    <a href="our-team.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;" style-hover="border-bottom-color:#A98BD0;">Our Team</a>
+    <a href="locations.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;" style-hover="border-bottom-color:#A98BD0;">Locations</a>
+    <a href="faq.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;" style-hover="border-bottom-color:#A98BD0;">FAQ</a>
+    <a href="contact.html" style="color:#8565BE;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent;" style-hover="border-bottom-color:#A98BD0;">Contact</a>
   </nav>
-  <a href="tel:9493374833" class="header-cta" style="flex-shrink:0;background:linear-gradient(135deg,#9575CD,#B8A0E0);color:white;padding:11px 22px;border-radius:50px;font-weight:700;font-size:13px;white-space:nowrap;display:flex;align-items:center;gap:7px;">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"></path></svg>
-    949-337-4833
-  </a>
-  <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav_Service_Nutrition_dc_html').classList.toggle('open')" aria-label="Menu">
+  <a href="tel:9493374833" class="header-cta" style="flex-shrink:0;background:linear-gradient(135deg,#9575CD,#B8A0E0);color:white;padding:11px 24px;border-radius:50px;font-weight:700;font-size:14px;white-space:nowrap;box-shadow:0 4px 14px rgba(149,117,205,0.25);display:flex;align-items:center;gap:8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"></path></svg>949-337-4833</a>
+
+  <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </header>
-<div id="mobileNav_Service_Nutrition_dc_html" class="mobile-nav">
+
+<!-- MOBILE NAV -->
+<div id="mobileNav" class="mobile-nav">
   <a href="about.html">About</a>
   <a href="services.html" style="font-weight:900!important;">Services</a>
   <a href="service-medical-care.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">👨‍⚕️ Medical Care</a>
@@ -134,77 +238,165 @@
 </div>
 
 <!-- HERO -->
-<section style="padding:130px 40px 80px;background:linear-gradient(150deg,#D8C5EC 0%,#E8D8F5 50%,#F3ECF9 100%);position:relative;overflow:hidden;">
+<section style="padding:120px 40px 80px;background:linear-gradient(150deg,#D8C5EC 0%,#E8D8F5 50%,#F3ECF9 100%);position:relative;overflow:hidden;">
   <div style="position:absolute;top:-80px;right:-80px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
-  <div style="max-width:1200px;margin:0 auto;">
-    <a href="services.html" style="display:inline-flex;align-items:center;gap:6px;color:#8565BE;font-size:13px;font-weight:700;margin-bottom:16px;">← Back to All Services</a>
-    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.35);color:#3D1565;padding:7px 18px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;margin-left:16px;">Personal & Daily Care</div>
-    <div style="display:flex;align-items:center;gap:18px;margin-bottom:14px;">
-      <div style="width:60px;height:60px;border-radius:18px;background:linear-gradient(135deg,#9575CD,#B8A0E0);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">🥗</div>
-      <h1 style="font-family:'Playfair Display',serif;font-size:48px;color:#3D1565;font-weight:700;line-height:1.1;">Nutritional Counseling</h1>
-    </div>
-    <p style="font-size:20px;color:#5A3A8A;max-width:600px;line-height:1.75;font-weight:300;font-style:italic;">Nourishment That Honors the Whole Person</p>
+  <div style="max-width:1200px;margin:0 auto;animation:fadeUp .8s ease both;">
+    <div style="display:inline-block;background:rgba(255,255,255,0.35);color:#3D1565;padding:7px 18px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;">What We Offer</div>
+    <h1 style="font-family:'Playfair Display',serif;font-size:52px;color:#3D1565;font-weight:700;margin-bottom:18px;line-height:1.15;">Our Services</h1>
+    <p style="font-size:19px;color:#5A3A8A;max-width:620px;line-height:1.75;font-weight:300;">Serene Hospice LLC offers a comprehensive continuum of care, available to patients of any age, religion, and race. Each plan is tailored by our interdisciplinary team.</p>
   </div>
-  <div style="position:absolute;bottom:-1px;left:0;right:0;pointer-events:none;">
-    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:60px;" preserveAspectRatio="none"><path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="white"></path></svg>
-  </div>
+  <div style="position:absolute;bottom:-1px;left:0;right:0;pointer-events:none;"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:60px;" preserveAspectRatio="none"><path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="white"></path></svg></div>
 </section>
 
-<!-- OVERVIEW -->
-<section style="padding:80px 40px 40px;background:white;">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+<!-- SERVICES GRID -->
+<section style="padding:80px 40px;background:white;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:56px;">
+
+    <!-- CATEGORY 1 -->
     <div>
-      <div style="display:inline-block;background:#EAD8F5;color:#7A5ABE;padding:7px 16px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;">Overview</div>
-      <h2 style="font-family:'Playfair Display',serif;font-size:34px;color:#3D1565;font-weight:700;margin-bottom:18px;line-height:1.2;">What Is Nutritional Counseling?</h2>
-      <p style="font-size:16px;line-height:1.85;color:#5A4A7A;">Our registered dietitian and nutritional counselors provide practical, compassionate guidance on eating and hydration that supports comfort and respects the patient's wishes.</p>
-    </div>
-    <div style="background:#F7F3FC;border-radius:22px;padding:36px 32px;">
-      <div style="display:inline-block;background:#EAD8F5;color:#7A5ABE;padding:7px 16px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;">How It Works</div>
-      <p style="font-size:15px;line-height:1.85;color:#5A4A7A;">Nutrition in hospice shifts focus from treatment-oriented diets to comfort and enjoyment. Our team helps families understand changes in appetite that often accompany end-of-life illness, and provides guidance on foods and hydration that maximize comfort without causing distress.</p>
-      <div style="margin-top:24px;padding-top:20px;border-top:1px solid #E0D0F0;">
-        <p style="font-size:13px;color:#8A7AAA;font-style:italic;">All services are provided at no cost under the Medicare and Medi-Cal hospice benefit. Serene Hospice never denies care based on ability to pay.</p>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#9575CD,#B8A0E0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🩺</div>
+        <div><div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9575CD;margin-bottom:3px;">Clinical Services</div><h2 style="font-family:'Playfair Display',serif;font-size:26px;color:#3D1565;font-weight:700;">Medical &amp; Clinical Care</h2></div>
+        <div style="flex:1;height:1px;background:linear-gradient(to right,#C9A8E8,transparent);margin-left:12px;"></div>
+      </div>
+      <div class="sh-grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">👨‍⚕️</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Medical Care</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Physician visits to monitor, manage, and coordinate overall patient care.</p>
+          <a href="service-medical-care.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🩺</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Skilled Nursing</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Registered and licensed nurses providing clinical assessments, treatments, and symptom management.</p>
+          <a href="service-skilled-nursing.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🏃</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Therapy Evaluations</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Physical, occupational, and speech therapy evaluations to maximize function and comfort.</p>
+          <a href="service-therapy.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">💊</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Medications &amp; Supplies</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">All necessary medical equipment, supplies, and hospice-related medications provided and delivered.</p>
+          <a href="service-medications.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- DETAIL CARDS -->
-<section style="padding:40px 40px 80px;background:white;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <div class="detail-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
-      
-        <div style="background:white;border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;border:1.5px solid #E8D8F5;">
-          <div style="font-size:28px;">🥗</div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Dietary Assessment</h3>
-          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Evaluation of nutritional status, swallowing ability, and preferences to create a tailored nutrition approach.</p>
+    <!-- CATEGORY 2 -->
+    <div>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#9575CD,#B8A0E0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🧼</div>
+        <div><div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9575CD;margin-bottom:3px;">Day-to-Day Support</div><h2 style="font-family:'Playfair Display',serif;font-size:26px;color:#3D1565;font-weight:700;">Personal &amp; Daily Care</h2></div>
+        <div style="flex:1;height:1px;background:linear-gradient(to right,#C9A8E8,transparent);margin-left:12px;"></div>
+      </div>
+      <div class="sh-grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🧼</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Home Health Aide</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Certified aides assisting with personal care, hygiene, bathing, and daily living activities.</p>
+          <a href="service-home-health-aide.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
         </div>
-        <div style="background:white;border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;border:1.5px solid #E8D8F5;">
-          <div style="font-size:28px;">👨‍👩‍👧</div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Family Education</h3>
-          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Helping families understand appetite changes and how to support their loved one without causing distress.</p>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🍽️</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Personal Care Assistance</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Help with meals, light housekeeping, and daily living tasks to support comfort at home.</p>
+          <a href="service-personal-care.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
         </div>
-        <div style="background:white;border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;border:1.5px solid #E8D8F5;">
-          <div style="font-size:28px;">😌</div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Comfort-Focused Guidance</h3>
-          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Recommendations focused on pleasure and comfort rather than rigid dietary requirements.</p>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🥗</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Nutritional Counseling</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Dietary guidance to ensure comfort and optimal nourishment throughout care.</p>
+          <a href="service-nutrition.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
         </div>
-        <div style="background:white;border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;border:1.5px solid #E8D8F5;">
-          <div style="font-size:28px;">💧</div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Hydration Support</h3>
-          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Practical guidance on oral hydration and mouth care to maintain comfort.</p>
-        </div>
+      </div>
     </div>
+
+    <!-- CATEGORY 3 -->
+    <div>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#9575CD,#B8A0E0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💛</div>
+        <div><div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9575CD;margin-bottom:3px;">Holistic Support</div><h2 style="font-family:'Playfair Display',serif;font-size:26px;color:#3D1565;font-weight:700;">Emotional, Spiritual &amp; Family Support</h2></div>
+        <div style="flex:1;height:1px;background:linear-gradient(to right,#C9A8E8,transparent);margin-left:12px;"></div>
+      </div>
+      <div class="sh-grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🤝</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Social Worker Services</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Helping families navigate emotional, financial, and practical challenges with counseling and community resources.</p>
+          <a href="service-social-worker.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🙏</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Spiritual Counseling</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Chaplains and spiritual care coordinators providing faith-sensitive support to patients and families.</p>
+          <a href="service-spiritual-care.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">💛</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Bereavement &amp; Grief Support</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Ongoing counseling and grief resources for families before and after the loss of a loved one.</p>
+          <a href="service-bereavement.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">👨‍👩‍👧</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Caregiver Training</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Teaching family caregivers the skills and confidence to provide safe, effective care at home.</p>
+          <a href="service-caregiver-training.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🌟</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Volunteer Support</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Trained volunteers offering companionship, errands, and temporary family relief.</p>
+          <a href="service-volunteer.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY 4 -->
+    <div>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#9575CD,#B8A0E0);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🚨</div>
+        <div><div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9575CD;margin-bottom:3px;">Advanced Support</div><h2 style="font-family:'Playfair Display',serif;font-size:26px;color:#3D1565;font-weight:700;">Crisis &amp; Inpatient Care</h2></div>
+        <div style="flex:1;height:1px;background:linear-gradient(to right,#C9A8E8,transparent);margin-left:12px;"></div>
+      </div>
+      <div class="sh-grid-2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🚨</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">24-Hour Crisis Care</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Continuous at-home care during medical crises, with 24/7 on-call nursing support. Our team responds immediately when a patient needs urgent attention.</p>
+          <a href="service-crisis-care.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+        <div style="background: #F5F0FB; border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; gap: 12px; margin: 5px">
+          <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#A98BD0,#C9AEE4);display:flex;align-items:center;justify-content:center;font-size:22px;">🏨</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#3D1565;font-weight:700;">Short-Term Inpatient Care</h3>
+          <p style="font-size:13px;color:#6A5A8A;line-height:1.65;">Acute inpatient and respite care for pain crises or caregiver relief at skilled nursing facilities, with continuous monitoring and family support throughout.</p>
+          <a href="service-inpatient-care.html" style="color:#8565BE;font-size:13px;font-weight:700;margin-top:auto;">Learn more →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<!-- PHOTO STRIP -->
+<section style="padding:60px 40px 60px;background:white;">
+  <div style="max-width:1200px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 12px 40px rgba(149,117,205,0.12);">
+    <img src="uploads/hospice_image_3_3.png" alt="Caregiver walking with patient" style="width:100%;height:340px;object-fit:cover;object-position:50% 60%;display:block;">
   </div>
 </section>
 
-<!-- CTA -->
-<section style="padding:70px 40px;background:linear-gradient(135deg,#9575CD,#B8A0E0);">
-  <div style="max-width:700px;margin:0 auto;text-align:center;color:white;">
-    <h2 style="font-family:'Playfair Display',serif;font-size:34px;font-weight:700;margin-bottom:14px;">Questions About Nutritional Counseling?</h2>
-    <p style="font-size:16px;line-height:1.75;color:rgba(255,255,255,.88);margin-bottom:28px;">Our team is here to answer your questions and help determine if hospice is right for your loved one.</p>
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+<!-- CTA BANNER -->
+<section style="padding:70px 40px;margin-top:0;background:linear-gradient(135deg,#9575CD,#B8A0E0);">
+  <div style="max-width:800px;margin:0 auto;text-align:center;color:white;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;margin-bottom:16px;">Ready to Learn More?</h2>
+    <p style="font-size:16px;line-height:1.75;color:rgba(255,255,255,.88);margin-bottom:32px;">Our team is available to answer your questions and help determine the right care plan. Admissions are based on patient need. Admissions are never based on ability to pay.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
       <a href="contact.html" style="background:white;color:#8565BE;padding:15px 36px;border-radius:50px;font-weight:700;font-size:15px;box-shadow:0 4px 16px rgba(0,0,0,.15);">Contact Us</a>
-      <a href="services.html" style="background:rgba(255,255,255,.18);color:white;border:2px solid rgba(255,255,255,.45);padding:15px 36px;border-radius:50px;font-weight:700;font-size:15px;">All Services</a>
+      <a href="insurance.html" style="background:rgba(255,255,255,.18);color:white;border:2px solid rgba(255,255,255,.45);padding:15px 36px;border-radius:50px;font-weight:700;font-size:15px;">Insurance Coverage</a>
     </div>
   </div>
 </section>
@@ -212,7 +404,7 @@
 <!-- FOOTER -->
 <footer style="background:linear-gradient(135deg,#7B55A8,#A98BD0);color:white;padding:70px 40px 32px;">
   <div style="max-width:1200px;margin:0 auto;">
-    <div class="sh-footer-grid" style="margin-bottom:52px;align-items:start;">
+    <div class="sh-footer-grid" style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:52px;align-items:start;">
       <div>
         <img src="uploads/logo.png" alt="Serene Hospice LLC" style="height:80px;margin-bottom:18px;display:block;border-radius:12px;padding:8px;background:rgba(255,255,255,0.15);">
         <p style="font-size:13px;line-height:1.8;color:rgba(255,255,255,.72);max-width:260px;">Compassionate, patient-centered end-of-life care throughout the greater Los Angeles area.</p>
@@ -243,7 +435,7 @@
       <div>
         <h4 style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:20px;color:rgba(255,255,255,.55);">Hours</h4>
         <div style="display:flex;flex-direction:column;gap:12px;font-size:14px;color:rgba(255,255,255,.85);">
-          <div><span style="color:rgba(255,255,255,.6);font-size:12px;text-transform:uppercase;letter-spacing:.8px;">Office</span><br>Mon–Fri: 10:00 am – 4:00 pm</div>
+          <div><span style="color:rgba(255,255,255,.6);font-size:12px;text-transform:uppercase;letter-spacing:.8px;">Office</span><br>Mon-Fri: 10:00 am - 4:00 pm</div>
           <div><span style="color:rgba(255,255,255,.6);font-size:12px;text-transform:uppercase;letter-spacing:.8px;">Answering Service</span><br>Available 24 hours a day, 7 days a week</div>
         </div>
       </div>
@@ -254,5 +446,7 @@
     </div>
   </div>
 </footer>
+
+</section></x-dc>
 </body>
 </html>
