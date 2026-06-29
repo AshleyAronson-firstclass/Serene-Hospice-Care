@@ -40,35 +40,7 @@ img{max-width:100%!important;}
   div[style*="width:1px;background"]{display:none!important;}
 }
 </style>
-<script>
-(function(){
-  function bindNav(){
-    var btn=document.querySelector('.mobile-menu-btn');
-    var nav=document.getElementById('mobileNav');
-    if(!btn||!nav) return false;
-    btn.removeEventListener('click',btn._sh_click||function(){});
-    btn._sh_click=function(e){e.stopPropagation();nav.classList.toggle('open');};
-    btn.addEventListener('click',btn._sh_click);
-    nav.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click',function(){nav.classList.remove('open');});
-    });
-    document.addEventListener('click',function(e){
-      if(!nav.contains(e.target)&&!btn.contains(e.target)) nav.classList.remove('open');
-    });
-    return true;
-  }
-  // Try immediately
-  if(!bindNav()){
-    // Watch for React to mount the elements
-    var obs=new MutationObserver(function(){
-      if(bindNav()) obs.disconnect();
-    });
-    obs.observe(document.body||document.documentElement,{childList:true,subtree:true});
-    // Safety fallback after 5s
-    setTimeout(function(){obs.disconnect();bindNav();},5000);
-  }
-})();
-</script>
+
 <title>About Hospice – Serene Hospice LLC</title>
   
   <style>/* ── Serene Hospice LLC — Responsive Styles ── */
@@ -263,7 +235,10 @@ img { max-width:100%; display:block; }
   div[style*="grid-template-columns:minmax(0,1fr) minmax(0,360px)"],
   div[style*="grid-template-columns:repeat(4,1fr)"],
   div[style*="grid-template-columns:repeat(3,1fr)"],
-  div[style*="grid-template-columns:repeat(3,minmax(0,1fr))"],
+  div[style*="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"],
+  div[style*="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"],
+  div[style*="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"],
+  div[style*="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"],
   div[style*="grid-template-columns:repeat(2,1fr)"],
   div[style*="grid-template-columns:1fr 1fr"],
   div[style*="grid-template-columns:1fr 1.4fr"]{grid-template-columns:1fr!important;}
@@ -334,7 +309,7 @@ img { max-width:100%; display:block; }
     949-337-4833
   </a>
 
-  <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
+  <button class="mobile-menu-btn" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </header>
@@ -517,6 +492,35 @@ img { max-width:100%; display:block; }
   var trigger=wrap.querySelector('a');
   trigger.addEventListener('click',function(e){e.preventDefault();wrap.classList.toggle('open');});
   document.addEventListener('click',function(e){if(!wrap.contains(e.target))wrap.classList.remove('open');});
+})();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn = document.querySelector('.mobile-menu-btn');
+    var nav = document.querySelector('.mobile-nav');
+    if(!btn||!nav) return;
+    // Remove any inline onclick
+    btn.removeAttribute('onclick');
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isOpen = nav.style.display === 'flex';
+      nav.style.display = isOpen ? 'none' : 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.zIndex = '99999';
+    });
+    // Close when clicking a nav link
+    nav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){nav.style.display='none';});
+    });
+    // Close on outside click
+    document.addEventListener('click',function(e){
+      if(!nav.contains(e.target)&&!btn.contains(e.target)){
+        nav.style.display='none';
+      }
+    });
+  });
 })();
 </script>
 </body>
