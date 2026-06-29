@@ -370,7 +370,9 @@
   var wrap=document.querySelector('.nav-svc-wrap');
   if(!wrap)return;
   var trigger=wrap.querySelector('a');
-  trigger.addEventListener('click',function(e){e.preventDefault();wrap.classList.toggle('open');});
+  trigger.addEventListener('click',function(e){
+    if(window.innerWidth > 900){e.preventDefault();wrap.classList.toggle('open');}
+  });
   document.addEventListener('click',function(e){if(!wrap.contains(e.target))wrap.classList.remove('open');});
 })();
 </script>

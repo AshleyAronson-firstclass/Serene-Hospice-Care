@@ -53,7 +53,7 @@
   div[style*="grid-template-columns:minmax(0,1fr) minmax(0,360px)"],
   div[style*="grid-template-columns:repeat(4,1fr)"],
   div[style*="grid-template-columns:repeat(3,1fr)"],
-  div[style*="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"],
+  div[style*="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))"],
   div[style*="grid-template-columns:repeat(2,1fr)"],
   div[style*="grid-template-columns:1fr 1fr"],
   div[style*="grid-template-columns:1fr 1.4fr"]{grid-template-columns:1fr!important;}
@@ -130,21 +130,7 @@
 </header>
 <div id="mobileNav_Service_Therapy_dc_html" class="mobile-nav">
   <a href="about.html">About</a>
-  <a href="services.html" style="font-weight:900!important;">Services</a>
-  <a href="service-medical-care.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">👨‍⚕️ Medical Care</a>
-  <a href="service-skilled-nursing.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🩺 Skilled Nursing</a>
-  <a href="service-therapy.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🏃 Therapy Evaluations</a>
-  <a href="service-medications.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">💊 Medications &amp; Supplies</a>
-  <a href="service-home-health-aide.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🧼 Home Health Aide</a>
-  <a href="service-personal-care.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🍽️ Personal Care</a>
-  <a href="service-nutrition.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🥗 Nutritional Counseling</a>
-  <a href="service-social-worker.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🤝 Social Worker</a>
-  <a href="service-spiritual-care.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🙏 Spiritual Counseling</a>
-  <a href="service-bereavement.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">💛 Bereavement &amp; Grief</a>
-  <a href="service-caregiver-training.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">👨‍👩‍👧 Caregiver Training</a>
-  <a href="service-volunteer.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🌟 Volunteer Support</a>
-  <a href="service-crisis-care.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🚨 24-Hour Crisis Care</a>
-  <a href="service-inpatient-care.html" style="padding-left:20px!important;font-size:13px!important;color:#5A3A8A!important;">🏨 Short-Term Inpatient</a>
+  <a href="services.html">Services</a>
   <a href="eligibility.html">Eligibility</a>
   <a href="insurance.html">Insurance</a>
   <a href="our-team.html">Our Team</a>
@@ -281,7 +267,9 @@
   var wrap=document.querySelector('.nav-svc-wrap');
   if(!wrap)return;
   var trigger=wrap.querySelector('a');
-  trigger.addEventListener('click',function(e){e.preventDefault();wrap.classList.toggle('open');});
+  trigger.addEventListener('click',function(e){
+    if(window.innerWidth > 900){e.preventDefault();wrap.classList.toggle('open');}
+  });
   document.addEventListener('click',function(e){if(!wrap.contains(e.target))wrap.classList.remove('open');});
 })();
 </script>
